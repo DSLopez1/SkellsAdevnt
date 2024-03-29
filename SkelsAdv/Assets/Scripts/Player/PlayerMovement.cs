@@ -91,13 +91,6 @@ public class PlayerMovement : MonoBehaviour, IPhysics
         _isDashing = false;
     }
 
-    //private void rotatePlayer()
-    //{
-    //    Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-    //    gameObject.transform.rotation = Quaternion.LookRotation(direction);
-    //}
-
-    //create a function called rotatePlayer that slowly rotates the player to the direction of the input
     private void rotatePlayer()
     {
         Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
