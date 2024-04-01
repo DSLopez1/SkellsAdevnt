@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour, IPhysics
         movePlayer();
     }
 
+
+    //Moves the player
     private void movePlayer()
     {
         _pushBack = Vector3.Lerp(_pushBack, Vector3.zero, physicsResolve * Time.deltaTime);

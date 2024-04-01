@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     [Header("Menues")]
-    public GameObject activeMenu;
+    private GameObject _menuActive;
     public GameObject pauseMenu;
 
     [Header("Player Components")] 
@@ -15,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public PlayerMovement playerMovementScript;
     public PlayerAttack playerAttackScript;
+
+    private bool _isPaused;
 
 
     private void Awake()
@@ -31,26 +35,35 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !_isPaused)
         {
-            
+            StatePaused();
+            _menuActive = pauseMenu;
+            _menuActive.SetActive(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && _isPaused)
+        {
+            StateUnpaused();
         }
     }
 
-    //create a function that will pause the game
-    public void PauseGame()
+    public void StatePaused()
     {
+        _isPaused = !_isPaused;
         Time.timeScale = 0;
-        activeMenu = pauseMenu;
-        activeMenu.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
-    //create a function that will resume the game
-    public void ResumeGame()
+    public void StateUnpaused()
     {
+        _isPaused = !_isPaused;
+
         Time.timeScale = 1;
-        activeMenu.SetActive(true);
-        pauseMenu.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        _menuActive.SetActive(false);
+        _menuActive = null;
     }
 
 }
