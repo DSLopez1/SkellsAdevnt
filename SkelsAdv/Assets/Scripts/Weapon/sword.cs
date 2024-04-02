@@ -17,14 +17,14 @@ public class sword : MonoBehaviour
 
         if (dmg != null)
         {
-            dmg.TakeDamage(calculateDamage());
+            //dmg.TakeDamage(calculateDamage());
         }
     }
 
-    private int calculateDamage()
-    {
-        int multi = (int)((float)GameManager.instance.playerAttackScript.physPower * multiplier);
+    //private int calculateDamage()
+    //{
+    //    int multi = (int)((float)GameManager.Instance.playerAttackScript.physPower * multiplier);
 
-        return damage + multi;
-    }
+    //    return damage + multi;
+    //}
 }

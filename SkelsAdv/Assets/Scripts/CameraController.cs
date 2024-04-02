@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        _player = GameManager.instance.player.transform;
+        _player = GameManager.Instance.player.transform;
     }
 
     private void Update()
