@@ -6,18 +6,23 @@ public class PlayerStateFactory
 {
     PlayerStateMachine _context;
 
-    PlayerStateFactory(PlayerStateMachine currentContext)
+    public PlayerStateFactory(PlayerStateMachine currentContext)
     {
         _context = currentContext;
     }
 
     public PlayerBaseState Grounded()
     {
-        return new PlayerGroundState();
+        return new PlayerGroundState(_context, this);
     }
 
     public PlayerBaseState Jump()
     {
-        return new PlayerJumpState();
+        return new PlayerJumpState(_context, this);
+    }
+
+    public PlayerBaseState Run()
+    {
+        return new PlayerRunState(_context, this);
     }
 }

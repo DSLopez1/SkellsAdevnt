@@ -16,7 +16,7 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("JumpStats")]
     [SerializeField] float _jumpForce = 5;
     [SerializeField] int _maxJumps = 2;
-    bool _isJumping = false;
+    public bool _isJumping = false;
 
     [Header("DashStats")]
     [SerializeField] float _dashForce = 10;
@@ -38,10 +38,15 @@ public class PlayerStateMachine : MonoBehaviour
     Vector3 _pushBack;
 
     PlayerBaseState _currentState;
+    PlayerStateFactory _states;
 
+    public PlayerBaseState currentState { get { return _currentState; } set { _currentState = value; } }
 
     void Start()
     {
+        _states = new PlayerStateFactory(this);
+        _currentState = _states.Grounded();
+        _currentState.EnterState();
         _controller = GetComponent<CharacterController>();
         _anim = GetComponent<Animator>();
     }

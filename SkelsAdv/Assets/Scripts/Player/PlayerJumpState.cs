@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerBaseState
 {
+    public PlayerJumpState(PlayerStateMachine playerStateMachine, PlayerStateFactory playerStateFactory)
+    :base (playerStateMachine, playerStateFactory)
+    {
+    }
+
     public override void EnterState()
     {
     }
