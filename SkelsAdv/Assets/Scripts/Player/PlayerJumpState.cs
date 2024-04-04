@@ -28,4 +28,13 @@ public class PlayerJumpState : PlayerBaseState
     public override void InitializeSubState()
     {
     }
+
+    void HandleJump()
+    {
+        if (_ctx._isJumping)
+        {
+            _ctx._velocity.y = _ctx._jumpForce;
+            _ctx._isJumping = false;
+        }
+    }
 }

@@ -11,10 +11,12 @@ public class PlayerRunState : PlayerBaseState
 
     public override void EnterState()
     {
+        Debug.Log("Hello from run state");
     }
 
     public override void UpdateState()
     {
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -23,6 +25,10 @@ public class PlayerRunState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
+        if (!_ctx._ismoving)
+        {
+            SwitchState(_playerStateFactory.Grounded());
+        }
     }
 
     public override void InitializeSubState()
