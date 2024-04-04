@@ -17,6 +17,8 @@ public class PlayerRunState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
+        _ctx._velocity.x = _ctx._inputx * _ctx._movementSpeed;
+        _ctx._velocity.z = _ctx._inputz * _ctx._movementSpeed;
     }
 
     public override void ExitState()
@@ -27,7 +29,7 @@ public class PlayerRunState : PlayerBaseState
     {
         if (!_ctx._ismoving)
         {
-            SwitchState(_playerStateFactory.Grounded());
+            SwitchState(_playerStateFactory.Idle());
         }
     }
 

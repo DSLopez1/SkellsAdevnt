@@ -25,4 +25,9 @@ public class PlayerStateFactory
     {
         return new PlayerRunState(_context, this);
     }
+
+    public PlayerBaseState Idle()
+    {
+        return new PlayerIdleState(_context, this);
+    }
 }

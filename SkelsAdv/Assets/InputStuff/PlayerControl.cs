@@ -50,7 +50,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b3a57d26-100e-4978-a00b-4ec08a5c531a"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<HID::Sony Interactive Entertainment DualSense Edge Wireless Controller>/button2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

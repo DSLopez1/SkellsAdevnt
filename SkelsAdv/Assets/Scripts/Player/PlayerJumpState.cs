@@ -7,14 +7,23 @@ public class PlayerJumpState : PlayerBaseState
     public PlayerJumpState(PlayerStateMachine playerStateMachine, PlayerStateFactory playerStateFactory)
     :base (playerStateMachine, playerStateFactory)
     {
+        _isRootState = true;
+        InitializeSubState();
     }
 
     public override void EnterState()
     {
+        Debug.Log("Jump");
+        HandleJump();
     }
 
     public override void UpdateState()
     {
+        CheckSwitchState();
+        _ctx._velocity.y += _ctx._gravity * Time.deltaTime;
+
+        _ctx._velocity.x = _ctx._inputx * _ctx._movementSpeed;
+        _ctx._velocity.z = _ctx._inputz * _ctx._movementSpeed;
     }
 
     public override void ExitState()
@@ -23,6 +32,10 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
+        if (_ctx._controller.isGrounded)
+        {
+            SwitchState(_playerStateFactory.Grounded());
+        }
     }
 
     public override void InitializeSubState()
@@ -31,10 +44,7 @@ public class PlayerJumpState : PlayerBaseState
 
     void HandleJump()
     {
-        if (_ctx._isJumping)
-        {
-            _ctx._velocity.y = _ctx._jumpForce;
-            _ctx._isJumping = false;
-        }
+        _ctx._velocity.y = _ctx._jumpForce;
+        _ctx._gravity = _ctx._jumpGravity;
     }
 }

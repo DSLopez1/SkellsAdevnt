@@ -12,11 +12,14 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("PlayerMoveStats")]
     public float _movementSpeed = 10;
+    public float _inputx;
+    public float _inputz;
     public bool _ismoving = false;
 
     [Header("JumpStats")]
     public float _jumpForce = 5;
     public int _maxJumps = 2;
+    public float _jumpGravity = -9.81f;
     public bool _isJumping = false;
 
     [Header("DashStats")]
@@ -31,7 +34,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool _canRotate = true;
 
     [Header("Physics")]
-    public float _gravity = 9.81f;
+    public float _gravity = -9.81f;
     public float _physicsResolve = 0.1f;
 
     //Movement vectors
@@ -56,6 +59,8 @@ public class PlayerStateMachine : MonoBehaviour
         _input.BaseGrounded.Move.started += OnMovementInput;
         _input.BaseGrounded.Move.performed += OnMovementInput;
         _input.BaseGrounded.Move.canceled += OnMovementInput;
+        _input.BaseGrounded.Jump.started += OnJump;
+        _input.BaseGrounded.Jump.canceled += OnJump;
     }
 
 
@@ -64,8 +69,8 @@ public class PlayerStateMachine : MonoBehaviour
         _pushBack = Vector3.Lerp(_pushBack, Vector3.zero, _physicsResolve * Time.deltaTime);
 
         HandleRotation();
-        _currentState.UpdateState();
-        _controller.Move(((_velocity * _movementSpeed) + _pushBack) * Time.deltaTime);
+        _currentState.UpdateStates();
+        _controller.Move((_velocity + _pushBack) * Time.deltaTime);
     }
 
     void HandleRotation()
@@ -87,8 +92,13 @@ public class PlayerStateMachine : MonoBehaviour
     public void OnMovementInput(InputAction.CallbackContext context)
     {
         _inputVector = context.ReadValue<Vector2>();
-        _velocity.x = _inputVector.x;
-        _velocity.z = _inputVector.y;
+        _inputx = _inputVector.x;
+        _inputz = _inputVector.y;
         _ismoving = _inputVector.x != 0 || _inputVector.y != 0;
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        _isJumping = context.ReadValueAsButton();
     }
 }

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class PlayerBaseState
 {
+    protected bool _isRootState = false;
     protected PlayerStateMachine _ctx;
     protected PlayerStateFactory _playerStateFactory;
+    protected PlayerBaseState _superState;
+    protected PlayerBaseState _subState;
 
     public PlayerBaseState (PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) 
     {
@@ -23,7 +26,14 @@ public abstract class PlayerBaseState
 
     public abstract void InitializeSubState();
 
-    void UpdateStates() {}
+    public void UpdateStates()
+    {
+        UpdateState();
+        if (_subState != null)
+        {
+            _subState.UpdateStates();
+        }
+    }
 
     protected void SwitchState(PlayerBaseState newState)
     {
@@ -33,11 +43,26 @@ public abstract class PlayerBaseState
         //Then enters new state
     
         newState.EnterState();
-        _ctx.currentState = newState;
+
+        if (_isRootState)
+        {
+            _ctx.currentState = newState;
+        }
+        else if (_superState != null)
+        {
+            _superState.SetSubState(newState);
+        }
     }
-    
-    protected void SetSuperState() {}
-    
-    protected void SetSubState() {}
+
+    protected void SetSuperState(PlayerBaseState newSuperState)
+    {
+        _superState = newSuperState;
+    }
+
+    protected void SetSubState(PlayerBaseState newSubState)
+    {
+        _subState = newSubState;
+        newSubState.SetSuperState(this);
+    }
 }
 
